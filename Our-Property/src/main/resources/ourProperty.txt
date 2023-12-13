@@ -1,0 +1,128 @@
+Some CRUD Operations
+
+--------------------Controller code-----------------------------------------------------------------
+
+//        //  Create operation with Entity
+//        @PostMapping
+//        public ResponseEntity<Property> createProperty(@RequestBody Property property) {
+//            Property createdProperty = propertyService.createProperty(property);
+//            return new ResponseEntity<>(createdProperty, HttpStatus.CREATED);
+//        }
+
+//        // Read operations
+//        @GetMapping
+//        public ResponseEntity<List<Property>> getAllProperties() {
+//            List<Property> properties = propertyService.getAllProperties();
+//            return new ResponseEntity<>(properties, HttpStatus.OK);
+//        }
+//
+//        @GetMapping("/{id}")
+//        public ResponseEntity<Property> getPropertyById(@PathVariable Long id) {
+//            Optional<Property> property = propertyService.getPropertyById(id);
+//            return property.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+//                    .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+//        }
+//
+//        // Update operation
+//        @PutMapping("/{id}")
+//        public ResponseEntity<Property> updateProperty(@PathVariable Long id, @RequestBody Property updatedProperty) {
+//            Property updated = propertyService.updateProperty(id, updatedProperty);
+//            return updated != null ?
+//                    new ResponseEntity<>(updated, HttpStatus.OK) :
+//                    new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//
+//        // Delete operation
+//        @DeleteMapping("/{id}")
+//        public ResponseEntity<Void> deleteProperty(@PathVariable Long id) {
+//            propertyService.deleteProperty(id);
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        }
+
+//    @PatchMapping("/{id}")
+//    public ResponseEntity<PropertyDto> patchPropertyStatus(
+//            @PathVariable Long id,
+//            @RequestParam String action) {
+//        // Assuming you have a method in PropertyService to perform the status update
+//        Property updatedProperty = propertyService.patchPropertyStatus(id, action);
+//
+//        // Assuming you have a method in PropertyService to convert entity to DTO
+//        PropertyDto updatedPropertyDTO = PropertyDto.fromEntity(updatedProperty);
+//
+//        return new ResponseEntity<>(updatedPropertyDTO, HttpStatus.OK);
+//    }
+
+
+---------------------SERVICE CODE-------------------------------------------------------------------
+
+//    public Property createProperty(Property property);
+//    public List<Property> getAllProperties();
+//    public Optional<Property> getPropertyById(Long id);
+//    public Property updateProperty(Long id, Property updatedProperty);
+//    public void deleteProperty(Long id);
+
+-----------------------------SERVICE IMPL CODE----------------------------------------------------------------------------
+
+
+//        // Create operation
+//        @Override
+//        public Property createProperty(Property property) {
+//            return propertyRepository.save(property);
+//        }
+//
+//        // Read operations
+//        @Override
+//        public List<Property> getAllProperties() {
+//            return propertyRepository.findAll();
+//        }
+//        // Read operations By Id
+//        @Override
+//        public Optional<Property> getPropertyById(Long id) {
+//            return propertyRepository.findById(id);
+//        }
+//
+//        // Update operation
+//        @Override
+//        public Property updateProperty(Long id, Property updatedProperty) {
+//            Optional<Property> optionalProperty = propertyRepository.findById(id);
+//            if (optionalProperty.isPresent()) {
+//                Property existingProperty = optionalProperty.get();
+//                // Update the existing property with the new values
+//                existingProperty.setApartmentType(updatedProperty.getApartmentType());
+//                existingProperty.setBhkType(updatedProperty.getBhkType());
+//                existingProperty.setFloor(updatedProperty.getFloor());
+//                existingProperty.setTotalFloor(updatedProperty.getTotalFloor());
+//                existingProperty.setPropertyAge(updatedProperty.getPropertyAge());
+//                existingProperty.setFacingZone(updatedProperty.getFacingZone());
+//                existingProperty.setBuiltUpArea(updatedProperty.getBuiltUpArea());
+//                existingProperty.setStatus(updatedProperty.getStatus());
+//
+//                return propertyRepository.save(existingProperty);
+//            } else {
+//                // Handle the case where the property with the given id is not found
+//                // You can throw an exception or handle it based on your application's requirements
+//                return null;
+//            }
+//        }
+//
+//        // Delete operation
+//        @Override
+//        public void deleteProperty(Long id) {
+//            propertyRepository.deleteById(id);
+//        }
+
+--------------------------------------------------------------------------------------------------------------
+
+// Convert Entity to DTO method (you can use a library like ModelMapper or manually map the fields)
+//    public static PropertyDTO fromEntity(Property property) {
+//        PropertyDTO dto = new PropertyDTO();
+//        dto.setApartmentType(property.getApartmentType());
+//        dto.setBhkType(property.getBhkType());
+//        dto.setFloor(property.getFloor());
+//        dto.setTotalFloor(property.getTotalFloor());
+//        dto.setPropertyAge(property.getPropertyAge());
+//        dto.setFacingZone(property.getFacingZone());
+//        dto.setBuiltUpArea(property.getBuiltUpArea());
+//        dto.setStatus(property.getStatus());
+//        return dto;
+//    }
